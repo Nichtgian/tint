@@ -3,9 +3,10 @@
 # Tint
 ![Last Commit](https://img.shields.io/github/last-commit/nichtgian/tint?color=ff69b4)
 ![License](https://img.shields.io/github/license/nichtgian/tint)
-
+![Build](https://github.com/Nichtgian/tint/workflows/Build%20Backend/badge.svg)
 <br/>
 
 **T**utorial **int**eractive - Create documentations and user guides in the form of interactive tutorials.
 
 ## Subtitle
+
