@@ -5,6 +5,5 @@ export interface Type<T> {
 }
 
 export const Injectable = (): GenericClassDecorator<Type<object>> => {
-    return (target: Type<object>) => {
-    };
+    return (target: Type<object>) => {};
 };

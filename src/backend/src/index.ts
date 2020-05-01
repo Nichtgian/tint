@@ -6,32 +6,33 @@ import { createExpressServer } from "routing-controllers";
 import { buildSchema } from "type-graphql";
 
 import { Injector } from "./helper/decorator/injection/injector";
-import { GeneralEnv } from "./helper/env/general.env";
+import { GeneralHelper } from "./helper/general.helper";
 import { ConsoleHelper } from "./helper/console/console.helper";
 import { Test } from "./test/test";
 
 import { MarkResolver } from "./api/resolver/mark.resolver";
 
-async function main() {
-    const connection = await createConnection();
+createConnection().then(async (connection: Connection) => {
     const schema = await buildSchema({
-        resolvers: [
-            MarkResolver
-        ]
+        resolvers: [ MarkResolver ]
     });
-    
-    const app = express();
+
+    const app = createExpressServer({
+        cors: false,
+        classTransformer: true,
+        routePrefix: "/api",
+        controllers: [__dirname + "/api/controller/*.controller{.js,.ts}"]
+    });
     app.use(express.static("../frontend"));
 
     const server = new ApolloServer({ schema });
     server.applyMiddleware({ app });
 
-    app.listen({ port: GeneralEnv.port }, () => {
-        ConsoleHelper.info(`Frontend: http://localhost:${GeneralEnv.port}`);
-        ConsoleHelper.info(`Backend API: http://localhost:${GeneralEnv.port}/api`);
-        ConsoleHelper.info(`Backend GraphQL API: http://localhost:${GeneralEnv.port}${server.graphqlPath}`);
+    app.listen({ port: GeneralHelper.port }, () => {
+        ConsoleHelper.info(`Frontend: http://localhost:${GeneralHelper.port}`);
+        ConsoleHelper.info(`Backend API: http://localhost:${GeneralHelper.port}/api`);
+        ConsoleHelper.info(`Backend GraphQL API: http://localhost:${GeneralHelper.port}${server.graphqlPath}`);
     });
-}
+});
 
-main().then();
 Injector.resolve<Test>(Test).runAllTests();

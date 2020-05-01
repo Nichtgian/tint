@@ -5,32 +5,32 @@ import { BaseTest, Testee } from "./base.test";
 export class TesteeTest extends BaseTest {
 
     public runAllTests() {
-        this.test_shouldBe_simpleString();
-        this.test_shouldBe_simpleNumber();
-        this.test_shouldNotBe_simpleNumber();
-        this.test_shouldBe_simpleObject();
-        this.test_shouldNotBe_simpleObject();
+        this.test_shouldBe_string();
+        this.test_shouldBe_number();
+        this.test_shouldNotBe_number();
+        this.test_shouldBe_object();
+        this.test_shouldNotBe_object();
     }
 
-    public test_shouldBe_simpleString() {
+    public test_shouldBe_string() {
         const value = "Test";
         const testee = new Testee(value);
         testee.should().be(value);
     }
 
-    public test_shouldBe_simpleNumber() {
+    public test_shouldBe_number() {
         const value = 10;
         const testee = new Testee(value);
         testee.should().be(value);
     }
 
-    public test_shouldNotBe_simpleNumber() {
+    public test_shouldNotBe_number() {
         const value = 10;
         const testee = new Testee(value);
         testee.should().notBe("10");
     }
 
-    public test_shouldBe_simpleObject() {
+    public test_shouldBe_object() {
         const value = {
             pNumber: 20,
             pString: "ObjTest"
@@ -42,7 +42,7 @@ export class TesteeTest extends BaseTest {
         testee.property("pString").should().be(value.pString);
     }
 
-    public test_shouldNotBe_simpleObject() {
+    public test_shouldNotBe_object() {
         const value = {
             pNumber: 30,
             pString: "ObjTest2"

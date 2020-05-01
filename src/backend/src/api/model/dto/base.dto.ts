@@ -3,7 +3,7 @@ import { BaseEntity } from "../entity/base.entity";
 
 @ObjectType()
 export abstract class BaseDTO {
-    @Field(type => ID)
+    @Field(() => ID)
     public id: string;
 
     protected constructor(entity: BaseEntity) {

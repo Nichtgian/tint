@@ -4,5 +4,9 @@ import { PageEntity } from "../model/entity/page.entity";
 
 @Injectable()
 export class PageRepository extends BaseRepository<PageEntity> {
-    
+
+    public constructor() {
+        super(PageEntity);
+    }
+
 }

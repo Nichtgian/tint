@@ -5,4 +5,8 @@ import { MarkEntity } from "../model/entity/mark.entity";
 @Injectable()
 export class MarkRepository extends BaseRepository<MarkEntity> {
 
+    public constructor() {
+        super(MarkEntity);
+    }
+
 }

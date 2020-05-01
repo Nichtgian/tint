@@ -1,7 +1,14 @@
-import { Repository } from "typeorm";
+import { Repository, getRepository } from "typeorm";
 import { BaseEntity } from "../model/entity/base.entity";
 
-export abstract class BaseRepository<Entity extends BaseEntity> extends Repository<Entity>{
+export abstract class BaseRepository<Entity extends BaseEntity> extends Repository<Entity> {
+
+    public repository: Repository<Entity>;
+
+    protected constructor(type: any) {
+        super();
+        this.repository = getRepository(type);
+    }
 
     public async getAllAsync(): Promise<Entity[]> {
         return this.getByAsync({});
@@ -12,11 +19,11 @@ export abstract class BaseRepository<Entity extends BaseEntity> extends Reposito
     }
 
     public async getByAsync(filter: {}): Promise<Entity[]> {
-        return await this.find(filter);
+        return await this.repository.find(filter);
     }
 
     public async getByIncludeRelationsAsync(relations: string[], filter: {}): Promise<Entity[]> {
-        return await this.find({ where: filter, relations: relations });
+        return await this.repository.find({ where: filter, relations: relations });
     }
 
     public async getSingleByAsync(filter: {}): Promise<Entity> {
@@ -24,7 +31,7 @@ export abstract class BaseRepository<Entity extends BaseEntity> extends Reposito
     }
 
     public async getSingleByIncludeRelationsAsync(relations: string[], filter: {}): Promise<Entity> {
-        return await this.findOne({ where: filter, relations: relations });
+        return await this.repository.findOne({ where: filter, relations: relations });
     }
 
     public async upsertAsync(entity: Entity): Promise<Entity> {
@@ -41,10 +48,10 @@ export abstract class BaseRepository<Entity extends BaseEntity> extends Reposito
     }
 
     public async saveAsync(entity: Entity): Promise<Entity> {
-        return await this.manager.save(entity);
+        return await this.repository.manager.save(entity);
     }
 
     public async deleteAsync(entity: Entity): Promise<Entity> {
-        return await this.manager.remove(entity);
+        return await this.repository.manager.remove(entity);
     }
 }
